@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Edit Project</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 20px;
+            }
+            h1 {
+                text-align: center;
+                color: #333;
+            }
+            form {
+                max-width: 500px; /* Adjusted max-width */
+                margin: 0 auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            input[type="text"],
+            textarea,
+            select {
+                width: 100%;
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+            textarea {
+                resize: vertical;
+            }
+            button {
+                display: block;
+                width: 100%;
+                padding: 10px;
+                background-color: #007bff;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            .delete-button {
+                background-color: #dc3545;
+                margin-top: 10px;
+            }
+            .delete-button:hover {
+                background-color: #c82333;
+            }
+        </style>
+        <script>
+            function confirmDelete() {
+                return confirm('Are you sure you want to delete this project?');
+            }
+        </script>
+    </head>
+<body>
+    <h1>Edit Project</h1>
+    <form action="/projects/update/{{ project.id }}" method="post">
+        <label for="name">Project Name:</label>
+        <input type="text" id="name" name="name" value="{{ project.title }}" required><br><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>{{ project.description }}</textarea><br><br>
+
+        <button type="submit">Update Project</button>
+    </form>
+    <form action="/projects/" method="post" onsubmit="return confirmDelete();">
+        <button type="submit" class="delete-button">Delete Project</button>
+    </form>
+</body>
+</html>
