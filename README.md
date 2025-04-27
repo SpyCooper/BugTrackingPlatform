@@ -26,7 +26,7 @@ The only two folders in here are the both django apps.
 1. **Clone the Repository**  
     Clone this repository to your machine using:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/SpyCooper/BugTrackingPlatform.git
     ```
 
 2. **Navigate to the Project Directory**  
