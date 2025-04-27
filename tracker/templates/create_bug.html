@@ -38,6 +38,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
         input[type="submit"] {
             width: 100%;
@@ -54,38 +55,17 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Create a New Bug Report</h1>
-        <form action="/submit_bug" method="post">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" cols="50" required></textarea>
-
-            <label for="priority">Priority:</label>
-            <select id="priority" name="priority" required>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-
-            <label for="status">Status:</label>
-            <select id="status" name="status" required>
-                <option value="open">Open</option>
-                <option value="in_progress">In Progress</option>
-                <option value="closed">Closed</option>
-            </select>
-
-            <label for="priority">Priority:</label>
-            <select id="priority" name="priority" required>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-
-            <input type="submit" value="Submit" onclick="this.form.action='/bugs/'">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+            <input type="submit" value="Submit">
         </form>
     </div>
 </body>

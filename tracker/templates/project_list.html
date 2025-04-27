@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            position: relative;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        li:hover {
+            transform: scale(1.02);
+        }
+        li a {
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+        li a:hover {
+            background-color: #f0f0f0;
+        }
+        li strong {
+            display: inline-block;
+            width: 100px;
+            white-space: nowrap;
+            overflow: showing;
+            text-overflow: none;
+        }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button a {
+            color: #fff;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .edit-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 3px 7px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .edit-button a {
+            color: inherit;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        .edit-button:hover {
+            background-color: #f0f0f0;
+        }
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<header>
+    <button style="position: absolute; top: 10px; right: 10px; background-color: #f4f4f4; border: none; padding: 10px; border-radius: 5px; cursor: pointer;">
+        <a href="{% url 'login' %}" style="text-decoration: none; color: #333;">Log Out</a>
+    </button>
+</header>
+<body>
+    <h1>Your Projects</h1>    
+    <ul>
+        {% for project in projects %}
+            <li>
+                {% if project.owner == user %}
+                <form method="POST" action="" style="margin: 0; position: absolute; top: 10px; right: 10px;">
+                    {% csrf_token %}
+                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                    <button type="submit" name="action" value="edit_project" class="edit-button">
+                        <a>Edit</a>
+                    </button>
+                </form>
+                {% endif %}
+                <form method="POST" action="" style="margin: 0;">
+                    {% csrf_token %}
+                    <input type="hidden" name="project_id" value="{{ project.id }}">
+                    <button type="submit" name="action" value="view_project" style="all: unset; cursor: pointer; width: 100%; text-align: left;">
+                        <div style="padding: 15px;">
+                            <strong style="font-size: 1.3em; display: block; margin-bottom: 5px;">{{ project.title }}</strong>
+                            <p style="margin: 5px 0;"><strong>Owner:</strong> {{ project.owner }}</p>
+                            <p style="margin: 5px 0;"><strong>Bug Count:</strong> {{ project.bug_count }}</p>
+                            <p style="margin: 5px 0;"><strong>Description:</strong> {{ project.description }}</p>
+                        </div>
+                    </button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <form method="POST" action="" style="text-align: center; margin-top: 20px;">
+        {% csrf_token %}
+        <button type="submit" name="action" value="create_project" style="padding: 10px 20px; background-color: #007bff; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+            Create a New Project
+        </button>
+    </form>
+</body>
+</html>

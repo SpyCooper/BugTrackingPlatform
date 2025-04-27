@@ -39,6 +39,17 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        select[multiple] {
+            width: 100%;
+            height: 150px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background-color: #fff;
+            font-family: Arial, sans-serif;
         }
         input[type="submit"] {
             width: 100%;
@@ -58,14 +69,13 @@
 <body>
     <div class="container">
         <h1>Create a New Project</h1>
-        <form action="/submit_project" method="post">
-            <label for="project_name">Project Name:</label>
-            <input type="text" id="project_name" name="project_name" required>
-
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" cols="50" required></textarea>
-
-            <input type="submit" value="Submit" onclick="this.form.action='/projects/'">
+        <form action="{% url 'create_project' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if error_message %}
+                <p style="color: red;">{{ error_message }}</p>
+            {% endif %}
+            <input type="submit" value="Submit">
         </form>
     </div>
 </body>
